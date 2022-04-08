@@ -220,12 +220,17 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
             "last" to nameofclasss
         )
         bind.button.setOnClickListener {
+            bind.button.visibility=View.GONE
+            bind.progressBar2.visibility=View.VISIBLE
             val buttonname = bind.button.text.toString()
             if (buttonname.equals("Update Data")) {
                 db.collection("users").document(dataClass.ids).set(datas).addOnSuccessListener {
                     deletedatalayout.progressBar2.visibility = View.GONE
                     deletedatalayout.button.visibility = View.VISIBLE
                     builderofdeletedata.dismiss()
+                    bind.button.visibility=View.VISIBLE
+                    bind.progressBar2.visibility=View.GONE
+                    builder.dismiss()
                     Toast.makeText(this, "Data Updated Successfully", Toast.LENGTH_SHORT).show()
                     arrayList.clear()
                     binding.progressBar.visibility = View.VISIBLE

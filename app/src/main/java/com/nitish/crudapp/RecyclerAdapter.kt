@@ -33,11 +33,11 @@ class RecyclerAdapter(var array:ArrayList<DataClass>,var dataclassInterface: Dat
         holder.ids.setText("${array.get(position).ids}")
         holder.deletebtn.setOnClickListener {
             dataclassInterface.delete(array.get(position))
-            Log.e("Tad", array.get(position).toString())
+            //Log.e("Tad", array.get(position).toString())
         }
         holder.updatebtn.setOnClickListener {
             dataclassInterface.update(array.get(position))
-            Log.e("Tad", array.get(position).toString())
+           // Log.e("Tad", array.get(position).toString())
         }
 
     }
