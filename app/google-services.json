@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "50439101173",
+    "project_id": "crudapp-cf483",
+    "storage_bucket": "crudapp-cf483.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:50439101173:android:f294f56537dc32d3b283bc",
+        "android_client_info": {
+          "package_name": "com.nitish.crudapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "50439101173-dtr2sr1og6r7d9j21qaku6oc4skbf2h5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHt1uYLdXidAXq2ix1SU7E4UhehtAxLkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "50439101173-dtr2sr1og6r7d9j21qaku6oc4skbf2h5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

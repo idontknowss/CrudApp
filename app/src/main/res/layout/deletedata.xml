@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:padding="30dp"
+            >
+            <TextView
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ARE YOU SURE ?"
+                android:textAlignment="center"
+                android:textColor="#ED0E0E"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                 android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Are you sure to delete the data from This View"
+
+                android:textColor="@color/black"
+                android:textSize="15sp"
+                />
+
+            <Button
+                android:layout_marginTop="10dp"
+                android:id="@+id/button"
+                android:backgroundTint="#E60C0C"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Delete Data" />
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                android:textAlignment="center"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/cancelbtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Cancel" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
