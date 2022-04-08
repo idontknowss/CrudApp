@@ -83,62 +83,63 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
         builder.setView(bind.root)
         bind.button.setOnClickListener {
             val buttonname = bind.button.text.toString()
-              if (buttonname.equals("Save Data")){
-            val nameofstudent = bind.studentname.text.toString().trim()
-            val nameofclass = bind.classname.text.toString().trim()
-            val user = hashMapOf(
-                "first" to nameofstudent,
-                "last" to nameofclass
-            )
-            if (TextUtils.isEmpty(bind.studentname.text.toString().trim())) {
-                bind.studentname.setError("Enter Name")
-            } else if (TextUtils.isEmpty(bind.classname.text.toString().trim())) {
-                bind.classname.setError("Enter Class")
-            } else {
-                bind.progressBar2.visibility = View.VISIBLE
-                bind.button.visibility = View.GONE
-                db.collection("users")
-                    .add(user)
-                    .addOnSuccessListener { documentReference ->
-                        bind.button.visibility = View.VISIBLE
-                        bind.progressBar2.visibility = View.GONE
-                        builder.dismiss()
-                        Toast.makeText(this, "Data Added Successfully", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener { e ->
-                        bind.button.visibility = View.VISIBLE
-                        bind.progressBar2.visibility = View.GONE
-                        Toast.makeText(this, "Data Added Failed", Toast.LENGTH_SHORT).show()
-                    }
-                arrayList.clear()
-                binding.progressBar.visibility = View.VISIBLE
-                db.collection("users")
-                    .get()
-                    .addOnSuccessListener { result ->
-                        for (document in result) {
-                            if (document.equals(null)) {
-                                binding.progressBar.visibility = View.GONE
-                                binding.nodata.visibility = View.VISIBLE
-                            } else {
-                                binding.nodata.visibility = View.GONE
-                                binding.progressBar.visibility = View.GONE
-                                val dataClass = DataClass(
-                                    document.getString("first").toString(),
-                                    document.getString("last").toString(),
-                                    document.id
-                                )
-                                arrayList.add(dataClass)
-                                recyclerAdapter.notifyDataSetChanged()
-                            }
-                            // Log.d(TAG, "${document.id} => ${document.data}")
+            if (buttonname.equals("Save Data")) {
+                val nameofstudent = bind.studentname.text.toString().trim()
+                val nameofclass = bind.classname.text.toString().trim()
+                val user = hashMapOf(
+                    "first" to nameofstudent,
+                    "last" to nameofclass
+                )
+                if (TextUtils.isEmpty(bind.studentname.text.toString().trim())) {
+                    bind.studentname.setError("Enter Name")
+                } else if (TextUtils.isEmpty(bind.classname.text.toString().trim())) {
+                    bind.classname.setError("Enter Class")
+                } else {
+                    bind.progressBar2.visibility = View.VISIBLE
+                    bind.button.visibility = View.GONE
+                    db.collection("users")
+                        .add(user)
+                        .addOnSuccessListener { documentReference ->
+                            bind.button.visibility = View.VISIBLE
+                            bind.progressBar2.visibility = View.GONE
+                            builder.dismiss()
+                            Toast.makeText(this, "Data Added Successfully", Toast.LENGTH_SHORT)
+                                .show()
                         }
-                    }
-                    .addOnFailureListener { exception ->
-                        //Log.w(TAG, "Error getting documents.", exception)
-                    }
+                        .addOnFailureListener { e ->
+                            bind.button.visibility = View.VISIBLE
+                            bind.progressBar2.visibility = View.GONE
+                            Toast.makeText(this, "Data Added Failed", Toast.LENGTH_SHORT).show()
+                        }
+                    arrayList.clear()
+                    binding.progressBar.visibility = View.VISIBLE
+                    db.collection("users")
+                        .get()
+                        .addOnSuccessListener { result ->
+                            for (document in result) {
+                                if (document.equals(null)) {
+                                    binding.progressBar.visibility = View.GONE
+                                    binding.nodata.visibility = View.VISIBLE
+                                } else {
+                                    binding.nodata.visibility = View.GONE
+                                    binding.progressBar.visibility = View.GONE
+                                    val dataClass = DataClass(
+                                        document.getString("first").toString(),
+                                        document.getString("last").toString(),
+                                        document.id
+                                    )
+                                    arrayList.add(dataClass)
+                                    recyclerAdapter.notifyDataSetChanged()
+                                }
+                                // Log.d(TAG, "${document.id} => ${document.data}")
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            //Log.w(TAG, "Error getting documents.", exception)
+                        }
 
+                }
             }
-        }
 
         }
 
@@ -177,6 +178,11 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
                         }
                 }
 
+        }
+        bind.cancelbtn.setOnClickListener {
+            bind.button.visibility=View.VISIBLE
+            bind.progressBar2.visibility=View.GONE
+            builder.dismiss()
         }
         binding.floatingActionButton.setOnClickListener {
             bind.classname.setText(null)
@@ -233,8 +239,8 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
             }
         }
         deletedatalayout.cancelbtn.setOnClickListener {
-            deletedatalayout.button.visibility=View.VISIBLE
-            deletedatalayout.progressBar2.visibility=View.GONE
+            deletedatalayout.button.visibility = View.VISIBLE
+            deletedatalayout.progressBar2.visibility = View.GONE
             builderofdeletedata.dismiss()
         }
 
@@ -245,7 +251,7 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
         bind.button.setText("Update Data")
         bind.classname.setText(dataClass.classnameofstudent)
         bind.studentname.setText(dataClass.nameofthestudent)
-        builderofdeletedata.show()
+        builder.show()
         val nameofstudents = bind.studentname.text.toString().trim()
         val nameofclasss = bind.classname.text.toString().trim()
         val datas = hashMapOf(
@@ -253,8 +259,8 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
             "last" to nameofclasss
         )
         bind.button.setOnClickListener {
-            val buttonname=bind.button.text.toString()
-            if (buttonname.equals("Update Data")){
+            val buttonname = bind.button.text.toString()
+            if (buttonname.equals("Update Data")) {
                 db.collection("users").document(dataClass.ids).set(datas).addOnSuccessListener {
                     deletedatalayout.progressBar2.visibility = View.GONE
                     deletedatalayout.button.visibility = View.VISIBLE
@@ -291,11 +297,66 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
                             //Log.w(TAG, "Error getting documents.", exception)
                         }
                 }
+            } else {
+                val nameofstudent = bind.studentname.text.toString().trim()
+                val nameofclass = bind.classname.text.toString().trim()
+                val user = hashMapOf(
+                    "first" to nameofstudent,
+                    "last" to nameofclass
+                )
+                if (TextUtils.isEmpty(bind.studentname.text.toString().trim())) {
+                    bind.studentname.setError("Enter Name")
+                } else if (TextUtils.isEmpty(bind.classname.text.toString().trim())) {
+                    bind.classname.setError("Enter Class")
+                } else {
+                    bind.progressBar2.visibility = View.VISIBLE
+                    bind.button.visibility = View.GONE
+                    db.collection("users")
+                        .add(user)
+                        .addOnSuccessListener { documentReference ->
+                            bind.button.visibility = View.VISIBLE
+                            bind.progressBar2.visibility = View.GONE
+                            builder.dismiss()
+                            Toast.makeText(this, "Data Added Successfully", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                        .addOnFailureListener { e ->
+                            bind.button.visibility = View.VISIBLE
+                            bind.progressBar2.visibility = View.GONE
+                            Toast.makeText(this, "Data Added Failed", Toast.LENGTH_SHORT).show()
+                        }
+                    arrayList.clear()
+                    binding.progressBar.visibility = View.VISIBLE
+                    db.collection("users")
+                        .get()
+                        .addOnSuccessListener { result ->
+                            for (document in result) {
+                                if (document.equals(null)) {
+                                    binding.progressBar.visibility = View.GONE
+                                    binding.nodata.visibility = View.VISIBLE
+                                } else {
+                                    binding.nodata.visibility = View.GONE
+                                    binding.progressBar.visibility = View.GONE
+                                    val dataClass = DataClass(
+                                        document.getString("first").toString(),
+                                        document.getString("last").toString(),
+                                        document.id
+                                    )
+                                    arrayList.add(dataClass)
+                                    recyclerAdapter.notifyDataSetChanged()
+                                }
+                                // Log.d(TAG, "${document.id} => ${document.data}")
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            //Log.w(TAG, "Error getting documents.", exception)
+                        }
+
+                }
+
             }
 
+
         }
-
-
-
     }
 }
