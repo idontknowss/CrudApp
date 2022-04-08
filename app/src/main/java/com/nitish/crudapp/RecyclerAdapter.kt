@@ -36,7 +36,7 @@ class RecyclerAdapter(var array:ArrayList<DataClass>,var dataclassInterface: Dat
             Log.e("Tad", array.get(position).toString())
         }
         holder.updatebtn.setOnClickListener {
-            dataclassInterface.delete(array.get(position))
+            dataclassInterface.update(array.get(position))
             Log.e("Tad", array.get(position).toString())
         }
 

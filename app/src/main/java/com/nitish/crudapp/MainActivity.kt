@@ -67,10 +67,10 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
         binding.recyclerView.layoutManager = linearLayoutManager
         binding.recyclerView.adapter = recyclerAdapter
         //add data progressbar
-        val recyclerlayoutBinding: RecyclerlayoutBinding =
-            RecyclerlayoutBinding.inflate(layoutInflater)
+
         bind = DialoglayoutBinding.inflate(layoutInflater)
         builder = AlertDialog.Builder(this).create()
+        builder.setView(bind.root)
         bind.progressBar2.visibility = View.GONE
         deletedatalayout = DeletedataBinding.inflate(layoutInflater)
         builderofdeletedata = AlertDialog.Builder(this).create()
@@ -78,9 +78,8 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
         bind.cancelbtn.setOnClickListener {
             builder.dismiss()
         }
-        builder.setView(bind.root)
         builderofdeletedata.setView(deletedatalayout.root)
-        builder.setView(bind.root)
+
         bind.button.setOnClickListener {
             val buttonname = bind.button.text.toString()
             if (buttonname.equals("Save Data")) {
@@ -143,42 +142,6 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
 
         }
 
-
-
-        recyclerlayoutBinding.deletebtn.setOnClickListener {
-            Toast.makeText(this, "Delete Button Clicked", Toast.LENGTH_SHORT).show()
-            db.collection("users").document(bind.textView.toString()).delete()
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Data Deleted Successfully", Toast.LENGTH_SHORT).show()
-                    arrayList.clear()
-                    binding.progressBar.visibility = View.VISIBLE
-                    db.collection("users")
-                        .get()
-                        .addOnSuccessListener { result ->
-                            for (document in result) {
-                                if (document.equals(" ")) {
-                                    binding.progressBar.visibility = View.GONE
-                                    binding.nodata.visibility = View.VISIBLE
-                                } else {
-                                    binding.nodata.visibility = View.GONE
-                                    binding.progressBar.visibility = View.GONE
-                                    val dataClass = DataClass(
-                                        document.getString("first").toString(),
-                                        document.getString("last").toString(),
-                                        document.getString("ids").toString()
-                                    )
-                                    arrayList.add(dataClass)
-                                }
-                                // Log.d(TAG, "${document.id} => ${document.data}")
-                            }
-                            recyclerAdapter.notifyDataSetChanged()
-                        }
-                        .addOnFailureListener { exception ->
-                            //Log.w(TAG, "Error getting documents.", exception)
-                        }
-                }
-
-        }
         bind.cancelbtn.setOnClickListener {
             bind.button.visibility=View.VISIBLE
             bind.progressBar2.visibility=View.GONE
@@ -190,8 +153,6 @@ class MainActivity : AppCompatActivity(), DataClasssInterface {
             bind.textView.setText("Add Data To Database")
             bind.button.setText("Save Data")
             builder.show()
-
-
         }
     }
 
